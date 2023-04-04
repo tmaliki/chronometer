@@ -15,16 +15,15 @@ let msecondes = 0;
 // start chrono
 startId.addEventListener('click', startChrono);
 function startChrono() {
-    timerVal = setInterval(()  => {
+    timerVal = setInterval(() => {
+        // affichage
         let heureShow = (heure < 10) ? "0"+ heure : heure;
         let minutesShow = (minutes < 10) ? "0"+ minutes : minutes;
         let secondesShow = (secondes < 10) ? "0"+ secondes : secondes;
         let msecondesShow = (msecondes < 10) ? "0"+ msecondes : msecondes;
-        
         chronoId.innerHTML = heureShow +" : "+ minutesShow +" : "+ secondesShow +" : "+ msecondesShow;
         
         msecondes += 1;
-        
         if(msecondes >= 10) {
             msecondes = 0;
             secondes += 1;
@@ -40,12 +39,14 @@ function startChrono() {
             heure += 1;
         }
     }, 100);
+    startId.setAttribute('disabled', '');
 }
 
 // stop chrono
 stopId.addEventListener('click', stopChrono);
 function stopChrono() {
-    clearTimeout(timerVal);
+    clearInterval(timerVal);
+    startId.removeAttribute('disabled');
 }
 
 // reset chrono
@@ -55,8 +56,7 @@ function resetChrono() {
     minutes = 0;
     secondes = 0;
     msecondes = 0;
-
-    clearTimeout(timerVal);
-
+    clearInterval(timerVal);
     chronoId.innerHTML = "00 : 00 : 00 : 00";
+    startId.removeAttribute('disabled');
 }
