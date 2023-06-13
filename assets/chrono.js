@@ -1,7 +1,8 @@
 /**
  * TP Chrono
  */
-let timerVal = 0;
+let timerId = 0;
+
 let chronoId = document.querySelector('#chronoId');
 let startId = document.querySelector('#startId');
 let stopId = document.querySelector('#stopId');
@@ -12,16 +13,22 @@ let minutes = 0;
 let secondes = 0;
 let msecondes = 0;
 
+function numberFormat(n) {
+    return n.toString().padStart(2, '0');
+}
+
 // start chrono
 startId.addEventListener('click', startChrono);
 function startChrono() {
-    timerVal = setInterval(() => {
+    timerId = setInterval(() => {
         // affichage
-        let heureShow = (heure < 10) ? "0"+ heure : heure;
-        let minutesShow = (minutes < 10) ? "0"+ minutes : minutes;
-        let secondesShow = (secondes < 10) ? "0"+ secondes : secondes;
-        let msecondesShow = (msecondes < 10) ? "0"+ msecondes : msecondes;
-        chronoId.innerHTML = heureShow +" : "+ minutesShow +" : "+ secondesShow +" : "+ msecondesShow;
+        // let heureShow = (heure < 10) ? "0"+ heure : heure;
+        // let minutesShow = (minutes < 10) ? "0"+ minutes : minutes;
+        // let secondesShow = (secondes < 10) ? "0"+ secondes : secondes;
+        // let msecondesShow = (msecondes < 10) ? "0"+ msecondes : msecondes;
+        // chronoId.innerHTML = heureShow +" : "+ minutesShow +" : "+ secondesShow +" : "+ msecondesShow;
+
+        chronoId.innerHTML = numberFormat(heure) +" : "+ numberFormat(minutes) +" : "+ numberFormat(secondes) +" : "+ msecondes;
         
         msecondes += 1;
         if(msecondes >= 10) {
@@ -39,13 +46,14 @@ function startChrono() {
             heure += 1;
         }
     }, 100);
+
     startId.setAttribute('disabled', '');
 }
 
 // stop chrono
 stopId.addEventListener('click', stopChrono);
 function stopChrono() {
-    clearInterval(timerVal);
+    clearInterval(timerId);
     startId.removeAttribute('disabled');
 }
 
@@ -56,7 +64,7 @@ function resetChrono() {
     minutes = 0;
     secondes = 0;
     msecondes = 0;
-    clearInterval(timerVal);
+    clearInterval(timerId);
     chronoId.innerHTML = "00 : 00 : 00 : 00";
     startId.removeAttribute('disabled');
 }
